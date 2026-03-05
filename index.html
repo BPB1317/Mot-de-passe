@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mot de Passe</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ========== SETUP SCREEN ========== -->
+<div id="setup-screen" class="screen active">
+  <div class="setup-card">
+    <h1 class="setup-title">MOT DE PASSE</h1>
+    <p class="setup-subtitle">Configurez votre partie</p>
+
+    <div class="setup-grid">
+      <div class="setup-field">
+        <label>Nom Équipe 1</label>
+        <input type="text" id="team1-name" placeholder="Équipe 1" />
+      </div>
+      <div class="setup-field">
+        <label>Nom Équipe 2</label>
+        <input type="text" id="team2-name" placeholder="Équipe 2" />
+      </div>
+
+      <div class="setup-field">
+        <label>Durée Manche 1 (sec)</label>
+        <input type="number" id="timer1" value="60" min="10" max="180" />
+      </div>
+      <div class="setup-field">
+        <label>Durée Manche 2 (sec)</label>
+        <input type="number" id="timer2" value="45" min="10" max="180" />
+      </div>
+
+      <div class="setup-field">
+        <label>Tours Manche 1</label>
+        <input type="number" id="tours1" value="3" min="1" max="10" />
+      </div>
+      <div class="setup-field">
+        <label>Tours Manche 2</label>
+        <input type="number" id="tours2" value="3" min="1" max="10" />
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="startGame()">🎮 Lancer la partie</button>
+  </div>
+</div>
+
+<!-- ========== GAME SCREEN ========== -->
+<div id="game-screen" class="screen">
+
+  <!-- Header -->
+  <div class="game-header">
+    <div class="team-score" id="score-left">
+      <span class="team-name" id="header-team0">Équipe 1</span>
+      <span class="score" id="header-score0">0</span>
+    </div>
+    <div class="header-center">
+      <div class="manche-badge" id="manche-badge">Manche 1</div>
+      <div class="timer-ring">
+        <svg viewBox="0 0 100 100">
+          <circle class="ring-bg" cx="50" cy="50" r="42" />
+          <circle class="ring-fg" id="ring-fg" cx="50" cy="50" r="42" />
+        </svg>
+        <span class="timer-text" id="timer-display">60</span>
+      </div>
+    </div>
+    <div class="team-score" id="score-right">
+      <span class="team-name" id="header-team1">Équipe 2</span>
+      <span class="score" id="header-score1">0</span>
+    </div>
+  </div>
+
+  <!-- Zone principale -->
+  <div class="game-main">
+
+    <!-- Idle (entre les tours) -->
+    <div id="idle-panel" class="panel active">
+      <div class="idle-card">
+        <div class="idle-team" id="idle-team-name">Équipe 1</div>
+        <div class="idle-label">C'est votre tour !</div>
+        <div class="idle-info" id="idle-info"></div>
+        <button class="btn-primary" onclick="beginTurn()">▶ Commencer le tour</button>
+      </div>
+    </div>
+
+    <!-- Tour en cours Manche 1 -->
+    <div id="turn-panel" class="panel">
+      <div class="word-card" id="word-card">
+        <div class="word-main" id="current-word">MOT</div>
+        <div class="word-hint" id="word-hint"></div>
+      </div>
+      <div class="turn-actions">
+        <button class="btn-wrong" onclick="wrongWord()">✗ Raté</button>
+        <button class="btn-correct" onclick="correctWord()">✓ Trouvé</button>
+      </div>
+      <div class="turn-score-display">
+        Score du tour : <span id="turn-score">0</span>
+      </div>
+    </div>
+
+    <!-- Tour en cours Manche 2 -->
+    <div id="forbidden-panel" class="panel">
+      <div class="forbidden-card">
+        <div class="forbidden-main" id="forbidden-word">MOT</div>
+        <div class="forbidden-list" id="forbidden-list"></div>
+      </div>
+      <div class="turn-actions">
+        <button class="btn-wrong" onclick="wrongWord()">✗ Raté</button>
+        <button class="btn-correct" onclick="correctWord()">✓ Trouvé</button>
+      </div>
+      <div class="turn-score-display">
+        Score du tour : <span id="turn-score-2">0</span>
+      </div>
+    </div>
+
+    <!-- Fin de tour -->
+    <div id="end-turn-panel" class="panel">
+      <div class="end-turn-card">
+        <div class="end-turn-title">⏱ Temps écoulé !</div>
+        <div class="end-turn-score">+<span id="end-turn-score">0</span> points</div>
+        <div class="end-turn-team" id="end-turn-team"></div>
+        <button class="btn-primary" onclick="nextTurn()">➡ Tour suivant</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Boutons flottants -->
+  <div class="fab-group">
+    <button class="fab" onclick="toggleAdmin()" title="Admin">⚙</button>
+    <button class="fab" onclick="toggleFullscreen()" title="Plein écran">⛶</button>
+  </div>
+
+</div>
+
+<!-- ========== END SCREEN ========== -->
+<div id="end-screen" class="screen">
+  <div class="end-card">
+    <div class="end-title">🏆 Fin de partie !</div>
+    <div class="end-winner" id="end-winner"></div>
+    <div class="end-scores">
+      <div class="end-score-block">
+        <div class="end-score-team" id="end-team0"></div>
+        <div class="end-score-val" id="end-score0"></div>
+      </div>
+      <div class="end-score-block">
+        <div class="end-score-team" id="end-team1"></div>
+        <div class="end-score-val" id="end-score1"></div>
+      </div>
+    </div>
+    <button class="btn-primary" onclick="adminReset()">🔄 Rejouer</button>
+  </div>
+  <div class="confetti-container" id="confetti-container"></div>
+</div>
+
+<!-- ========== ADMIN PANEL ========== -->
+<div id="admin-panel" class="admin-panel">
+  <div class="admin-header">
+    <span>⚙ Administration</span>
+    <button onclick="closeAdmin()">✕</button>
+  </div>
+  <div class="admin-body">
+    <div class="admin-manche-info" id="admin-manche-info">Manche 1</div>
+
+    <div class="admin-score-row">
+      <span id="admin-team-0">Équipe 1</span>
+      <button class="btn-minus" onclick="adminScore(0,-1)">−</button>
+      <span id="admin-score-0" class="admin-score-val">0</span>
+      <button class="btn-plus"  onclick="adminScore(0,+1)">+</button>
+    </div>
+    <div class="admin-score-row">
+      <span id="admin-team-1">Équipe 2</span>
+      <button class="btn-minus" onclick="adminScore(1,-1)">−</button>
+      <span id="admin-score-1" class="admin-score-val">0</span>
+      <button class="btn-plus"  onclick="adminScore(1,+1)">+</button>
+    </div>
+
+    <div class="admin-tours-grid">
+      <div class="admin-tours-cell">
+        <div class="cell-label">M1 – Éq.1</div>
+        <div class="cell-val" id="admin-tours-0-0">0/3</div>
+      </div>
+      <div class="admin-tours-cell">
+        <div class="cell-label">M1 – Éq.2</div>
+        <div class="cell-val" id="admin-tours-0-1">0/3</div>
+      </div>
+      <div class="admin-tours-cell">
+        <div class="cell-label">M2 – Éq.1</div>
+        <div class="cell-val" id="admin-tours-1-0">0/3</div>
+      </div>
+      <div class="admin-tours-cell">
+        <div class="cell-label">M2 – Éq.2</div>
+        <div class="cell-val" id="admin-tours-1-1">0/3</div>
+      </div>
+    </div>
+
+    <div class="admin-actions">
+      <button class="btn-secondary" onclick="adminNextTeam()">⇄ Changer d'équipe</button>
+      <button class="btn-secondary" onclick="adminNextManche()">⏭ Passer Manche 2</button>
+      <button class="btn-danger"    onclick="adminReset()">🔄 Réinitialiser</button>
+    </div>
+  </div>
+</div>
+
+<!-- Flash overlay -->
+<div class="flash-overlay" id="flash-overlay"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
