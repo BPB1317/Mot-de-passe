@@ -8,16 +8,34 @@ const CONFIG = {
 };
 
 const wordBank = [
-  "Éléphant","Guitare","Pyramide","Volcan","Chocolat",
-  "Astronaute","Bibliothèque","Caméléon","Dinosaure","Encyclopédie",
-  "Fantôme","Girafe","Hélicoptère","Igloo","Jongleur",
-  "Kangourou","Labyrinthe","Mannequin","Naufrage","Orchestre",
-  "Parachute","Quiche","Robot","Squelette","Trampoline",
-  "Ukulélé","Vampire","Xylophone","Yéti","Zeppelin",
-  "Accordéon","Boulangerie","Crocodile","Détective","Escargot",
-  "Forgeron","Grotte","Hamster","Idole","Jonquille",
-  "Kayak","Lionceau","Météore","Nomade","Optique",
-  "Phare","Rubis","Sorcière","Tornade","Uniforme",
+"Éléphant","Guitare","Pyramide","Volcan","Chocolat",
+"Astronaute","Bibliothèque","Caméléon","Dinosaure","Encyclopédie",
+"Fantôme","Girafe","Hélicoptère","Igloo","Jongleur",
+"Kangourou","Labyrinthe","Mannequin","Naufrage","Orchestre",
+"Parachute","Quiche","Robot","Squelette","Trampoline",
+"Vampire","Xylophone","Yéti",
+"Accordéon","Boulangerie","Crocodile","Détective","Escargot",
+"Forgeron","Grotte","Hamster","Idole","Jonquille",
+"Kayak","Lionceau","Météore","Nomade","Optique",
+"Phare","Rubis","Sorcière","Tornade","Uniforme",
+"Aventure","Boussole","Cascade","Domino","Émeraude",
+"Festival","Galaxie","Horloge","Invention","Jardin",
+"Koala","Lanterne","Mirage","Navire","Oasis",
+"Papillon","Rivière","Statue","Tempête",
+"Univers","Voyage","Wagon","Xérès",
+"Zèbre","Alchimiste","Brouillard","Cabane","Dauphin",
+"Éclipse","Flocon","Gladiateur","Horizon","Illusion",
+"Jungle","Kiosque","Montgolfière",
+"Poussière","Relique","Sablier","Titan",
+"Abysse","Balcon","Cactus","Diamant","Éventail",
+"Fossile","Geyser","Harpon","Incendie","Jumelles",
+"Kimono","Lézard","Marionnette","Nénuphar",
+"Panthère","Ruche","Sarcophage","Totem",
+"Whisky","Yacht",
+"Armure","Bourdon","Caravane",
+"Écureuil","Grimoire","Hibou",
+"Javelot","Luciole","Masque","Ninja",
+"Opéra","Pépite","Samouraï",
 ];
 
 const forbiddenCards = [
@@ -41,6 +59,10 @@ const forbiddenCards = [
   { word: "JARDIN",    forbidden: ["Fleur","Plante","Arroser","Pelouse","Nature"] },
   { word: "HÔPITAL",   forbidden: ["Médecin","Malade","Infirmier","Soin","Urgence"] },
   { word: "DÉSERT",    forbidden: ["Sable","Chaleur","Oasis","Dune","Sahara"] },
+  { word: "FROMAGE",   forbidden: ["Lait","Pâte","Odeur","Croûte","Tranche"] },
+  { word: "BANANE",    forbidden: ["Fruit","Jaune","Singe","Éplucher","Peau"] },
+  { word: "TOMATE",    forbidden: ["Légume","Rouge","Salade","Sauce","Ketchup"] },
+  { word: "LUNE",      forbidden: ["Nuit","Satellite","Cratère","Pleine","Éclipse"] },
 ];
 
 /* ========================================
@@ -447,3 +469,4 @@ function toggleFullscreen() {
 document.addEventListener("DOMContentLoaded", () => {
   showScreen("setup-screen");
 });
+
